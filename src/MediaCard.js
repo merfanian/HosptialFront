@@ -22,25 +22,33 @@ const useStyles = makeStyles({
 class MediaCard extends Component {
     render() {
         return (
-            <Card style={{ maxWidth: 345 }}>
-                <CardActionArea>
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                            {this.props.date}
-                        </Typography>
-                        <Typography
-                            variant="body2"
-                            color="textSecondary"
-                            component="p"
-                        >
-                            Dr. {this.props.doctor}
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-                <CardActions>
-                    <AlertDialog medicine={['1', '2']}></AlertDialog>
-                </CardActions>
-            </Card>
+            <div style={{ padding: 10 }}>
+                <Card
+                    style={{ width: 500, boxShadow: '3px 3px 3px 3px #9E9E9E' }}
+                >
+                    <CardActionArea>
+                        <CardContent>
+                            <Typography
+                                gutterBottom
+                                variant="h5"
+                                component="h2"
+                            >
+                                {this.props.date}
+                            </Typography>
+                            <Typography
+                                variant="body2"
+                                color="textSecondary"
+                                component="p"
+                            >
+                                Dr. {this.props.doctor}
+                            </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                    <CardActions>
+                        <AlertDialog medicine={['1', '2']}></AlertDialog>
+                    </CardActions>
+                </Card>
+            </div>
         );
     }
 }

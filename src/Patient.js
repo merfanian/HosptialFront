@@ -20,7 +20,7 @@ class Patinet extends Component {
 
     render() {
         return (
-            <div style={{ alignSelf: 'center', alignItems: 'center' }}>
+            <div>
                 <AppBar color={'secondary'} position="static">
                     <Toolbar>
                         {' '}
@@ -28,12 +28,23 @@ class Patinet extends Component {
                         {this.state.lastName}
                     </Toolbar>
                 </AppBar>
-                <CardsDeck
-                    cards={[
-                        { doctor: 'mahdi', date: 'september 19th' },
-                        { doctor: 'ali', date: 'today' },
-                    ]}
-                ></CardsDeck>
+                <div
+                    style={{
+                        paddingTop: 100,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignContent: 'center',
+                    }}
+                >
+                    <CardsDeck
+                        cards={[
+                            { doctor: 'mahdi', date: 'September 19th' },
+                            { doctor: 'asghar', date: 'November 12th' },
+                            { doctor: 'akbar', date: 'January 11th' },
+                            { doctor: 'ali', date: 'February 14th' },
+                        ]}
+                    ></CardsDeck>
+                </div>
             </div>
         );
     }

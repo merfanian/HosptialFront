@@ -6,7 +6,7 @@ class CardsDeck extends Component {
         <MediaCard doctor={card.doctor} date={card.date}></MediaCard>
     ));
     render() {
-        return <view>{this.listItems}</view>;
+        return <div>{this.listItems}</div>;
     }
 }
 
