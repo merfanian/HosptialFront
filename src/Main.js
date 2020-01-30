@@ -5,7 +5,7 @@ import Login from '../src/Login';
 import Home from '../src/Login';
 import Admin from '../src/Admin';
 import Patient from '../src/Patient';
-import Doctor from '../src/Login';
+import Doctor from '../src/Doctor';
 
 const Main = () => {
     return (
