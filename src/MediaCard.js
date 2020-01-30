@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActionArea from '@material-ui/core/CardActionArea';
+import SimpleDialog from '@material-ui/core/Dialog';
+import AlertDialog from './AlertDialog';
 
 const useStyles = makeStyles({
     card: {
@@ -18,17 +20,10 @@ const useStyles = makeStyles({
 });
 
 class MediaCard extends Component {
-    handleClick = () => {
-        alert('hey');
-    };
     render() {
         return (
             <Card style={{ maxWidth: 345 }}>
                 <CardActionArea>
-                    {/* <CardMedia
-                        style={{ height: 140 }}
-                        image="https://source.unsplash.com/random"
-                    /> */}
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="h2">
                             {this.props.date}
@@ -43,13 +38,7 @@ class MediaCard extends Component {
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
-                    <Button
-                        size="small"
-                        color="primary"
-                        onClick={this.handleClick}
-                    >
-                        Prescription
-                    </Button>
+                    <AlertDialog medicine={['1', '2']}></AlertDialog>
                 </CardActions>
             </Card>
         );

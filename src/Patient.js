@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import { Toolbar } from '@material-ui/core';
+import { Toolbar, Card } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import MaterialTableDemo from './PatientsTable';
-import { ProductCard } from 'react-ui-cards';
-import { UserCard } from 'react-ui-cards';
 import MediaCard from '../src/MediaCard';
+import CardsDeck from '../src/CardsDeck';
+
 class Patinet extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             nationalId: '',
             firstName: 'Mahdi',
@@ -21,7 +20,7 @@ class Patinet extends Component {
 
     render() {
         return (
-            <view>
+            <div style={{ alignSelf: 'center', alignItems: 'center' }}>
                 <AppBar color={'secondary'} position="static">
                     <Toolbar>
                         {' '}
@@ -29,9 +28,13 @@ class Patinet extends Component {
                         {this.state.lastName}
                     </Toolbar>
                 </AppBar>
-                {/* <MaterialTableDemo></MaterialTableDemo> */}
-                <MediaCard doctor="mahdi" date="september 19th"></MediaCard>
-            </view>
+                <CardsDeck
+                    cards={[
+                        { doctor: 'mahdi', date: 'september 19th' },
+                        { doctor: 'ali', date: 'today' },
+                    ]}
+                ></CardsDeck>
+            </div>
         );
     }
 }
