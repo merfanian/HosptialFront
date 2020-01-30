@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { AppBar, Toolbar, TextField } from '@material-ui/core';
 import VisitsDeck from './VisitsDeck';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import AlertDialog from './AlertDialog';
+import FormDialog from './FormDialog';
 
 class Doctor extends Component {
     constructor(props) {
@@ -12,10 +15,17 @@ class Doctor extends Component {
             lastName: 'Erfanian',
             employeeId: '',
             speciality: 'Nothing',
+            open: false,
         };
-        console.log(this.props);
+        console.log('props', this.props);
     }
 
+    handleClick = () => {
+        let s = this.state;
+        s.open = true;
+        alert(s.open, s.firstName);
+        this.setState(s);
+    };
     render() {
         return (
             <div>
@@ -54,13 +64,7 @@ class Doctor extends Component {
                         right: 80,
                     }}
                 >
-                    <Fab
-                        color="primary"
-                        aria-label="add"
-                        onClick={this.handleClick}
-                    >
-                        <AddIcon />
-                    </Fab>
+                    <FormDialog medicine={[]}></FormDialog>
                 </div>
             </div>
         );
