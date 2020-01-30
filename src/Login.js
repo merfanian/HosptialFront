@@ -22,13 +22,8 @@ class Login extends Component {
         const form = {
             role: this.state.role,
         };
-        if (
-            form.role == 'admin' ||
-            form.role == 'patient' ||
-            form.role == 'doctor'
-        )
-            window.location.href = '/' + form.role;
-        else alert('not permitted');
+
+        window.location.href = '/' + 'patient' + '?' + 'id=' + form.role;
     };
 
     handleChange = e => {

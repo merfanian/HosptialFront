@@ -3,8 +3,8 @@ import { Switch, Route } from 'react-router-dom';
 
 import Login from '../src/Login';
 import Home from '../src/Login';
-import Admin from '../src/Login';
-import Patient from '../src/Login';
+import Admin from '../src/Admin';
+import Patient from '../src/Patient';
 import Doctor from '../src/Login';
 
 const Main = () => {
