@@ -34,29 +34,31 @@ class Login extends Component {
 
     render() {
         return (
-            <Dialog
-                open
-                onRequestClose={this.props.toggleLogin}
-                fullScreen={this.props.fullScreen}
-            >
-                <DialogTitle>Login</DialogTitle>
-                <DialogContent>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="username"
-                        label="Username"
-                        type="username"
-                        onChange={e => this.handleChange(e)}
-                        fullWidth
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={e => this.onSubmit(e)} color="primary">
-                        Login
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            <div>
+                <Dialog
+                    open
+                    onRequestClose={this.props.toggleLogin}
+                    fullScreen={this.props.fullScreen}
+                >
+                    <DialogTitle>Login</DialogTitle>
+                    <DialogContent>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="username"
+                            label="Username"
+                            type="username"
+                            onChange={e => this.handleChange(e)}
+                            fullWidth
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={e => this.onSubmit(e)} color="primary">
+                            Login
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
         );
     }
 }
