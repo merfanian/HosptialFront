@@ -6,20 +6,40 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import AlertDialog from './AlertDialog';
 import FormDialog from './FormDialog';
+import Axios from 'axios';
+import urls from './Urls';
 
 class Doctor extends Component {
     constructor(props) {
         super(props);
+        var id = this.props.location.search;
+        id = id.slice(4);
         this.state = {
             firstName: 'Mahdi',
             lastName: 'Erfanian',
-            employeeId: '',
+            employeeId: id,
             speciality: 'Nothing',
             open: false,
+            visits: [],
         };
         console.log('props', this.props);
     }
 
+    componentDidMount() {
+        var url = urls.getVisitsOfSpecialDoctor.replace(
+            '#id',
+            this.state.employeeId,
+        );
+        console.log(url);
+
+        Axios.get(url, {
+            headers: { 'Access-Control-Allow-Origin': '*' },
+        }).then(res => {
+            let visits = res.data;
+            console.log(res.data);
+            this.setState({ visits: visits });
+        });
+    }
     handleClick = () => {
         let s = this.state;
         s.open = true;
