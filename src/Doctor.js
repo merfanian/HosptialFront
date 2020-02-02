@@ -15,30 +15,56 @@ class Doctor extends Component {
         var id = this.props.location.search;
         id = id.slice(4);
         this.state = {
-            firstName: 'Mahdi',
-            lastName: 'Erfanian',
+            firstName: null,
+            lastName: null,
             employeeId: id,
-            speciality: 'Nothing',
+            speciality: null,
             open: false,
-            visits: [],
+            visits: null,
+            isLoading: true,
+            diseases: null,
+            medicines: null,
         };
         console.log('props', this.props);
     }
 
-    componentDidMount() {
+    renderMyData() {
         var url = urls.getVisitsOfSpecialDoctor.replace(
             '#id',
             this.state.employeeId,
         );
-        console.log(url);
 
-        Axios.get(url, {
-            headers: { 'Access-Control-Allow-Origin': '*' },
-        }).then(res => {
+        Axios.get(url).then(res => {
             let visits = res.data;
-            console.log(res.data);
             this.setState({ visits: visits });
+            this.setState({ isLoading: false });
         });
+
+        Axios.get(urls.getMedicines).then(res => {
+            let medicines = res.data;
+            this.setState({ medicines: medicines });
+        });
+
+        Axios.get(urls.getDiseases).then(res => {
+            let diseases = res.data;
+            this.setState({ diseases: diseases });
+        });
+
+        Axios.get(
+            urls.getSpecialDoctorInfo.replace('#id', this.state.employeeId),
+        ).then(res => {
+            let info = res.data;
+            console.log(info);
+            this.setState({
+                firstName: info.f_name,
+                lastName: info.l_name,
+                speciality: info.speciality,
+            });
+        });
+    }
+
+    componentWillMount() {
+        this.renderMyData();
     }
     handleClick = () => {
         let s = this.state;
@@ -51,11 +77,18 @@ class Doctor extends Component {
             <div>
                 <AppBar>
                     <Toolbar>
-                        <h3>
-                            Welcome back Dr. {this.state.firstName}
-                            {this.state.lastName}
-                        </h3>
-                        <h4>speciality: {this.state.speciality}</h4>
+                        {this.state.firstName != null &&
+                        this.state.lastName != null ? (
+                            <div>
+                                <h3>
+                                    Welcome back Dr. {this.state.firstName}
+                                    {this.state.lastName}
+                                </h3>
+                            </div>
+                        ) : (
+                            <view></view>
+                        )}
+                        {/* <h4>speciality: {this.state.speciality}</h4> */}
                     </Toolbar>
                 </AppBar>
                 <div
@@ -66,12 +99,11 @@ class Doctor extends Component {
                         alignContent: 'center',
                     }}
                 >
-                    <VisitsDeck
-                        cards={[
-                            { patient: 'ali', date: 'emrooz' },
-                            { patient: 'mahdi', date: 'farda' },
-                        ]}
-                    ></VisitsDeck>
+                    {this.state.isLoading ? (
+                        <view>Please wait, Page is Loading ...</view>
+                    ) : (
+                        <VisitsDeck cards={this.state.visits}></VisitsDeck>
+                    )}
                 </div>
 
                 <div
@@ -84,7 +116,15 @@ class Doctor extends Component {
                         right: 80,
                     }}
                 >
-                    <FormDialog medicine={[]}></FormDialog>
+                    {this.state.diseases != null &&
+                    this.state.medicines != null ? (
+                        <FormDialog
+                            medicines={this.state.medicines}
+                            diseases={this.state.diseases}
+                        ></FormDialog>
+                    ) : (
+                        <view></view>
+                    )}
                 </div>
             </div>
         );

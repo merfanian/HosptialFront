@@ -8,10 +8,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
+import ControlledOpenSelect from './ControlledOpenSelect';
 class FormDialog extends Component {
     constructor(props) {
         super(props);
-        console.log(this);
 
         this.handleClickOpen.bind(this);
         this.handleClose.bind(this);
@@ -19,7 +19,8 @@ class FormDialog extends Component {
 
         this.state = {
             open: false,
-            disease: [{ diseaseCode: '', diseaseName: '' }],
+            diseases: this.props.diseases,
+            medicines: this.props.medicines,
             doctorId: this.props.doctorId,
             patiendId: '',
             date: '',
@@ -67,6 +68,10 @@ class FormDialog extends Component {
                                 this.setState({ patiendId: value });
                             }}
                         />
+                        <ControlledOpenSelect
+                            diseases={this.state.diseases}
+                            medicines={this.state.medicines}
+                        ></ControlledOpenSelect>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary">
