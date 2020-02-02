@@ -9,6 +9,9 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
 import ControlledOpenSelect from './ControlledOpenSelect';
+import axios from 'axios';
+import urls from './Urls';
+
 class FormDialog extends Component {
     constructor(props) {
         super(props);
@@ -16,13 +19,17 @@ class FormDialog extends Component {
         this.handleClickOpen.bind(this);
         this.handleClose.bind(this);
         this.handleSubmit.bind(this);
+        this.handleMedChange.bind(this);
+        this.handleChangeDisease.bind(this);
 
         this.state = {
             open: false,
             diseases: this.props.diseases,
             medicines: this.props.medicines,
             doctorId: this.props.doctorId,
-            patiendId: '',
+            patiendId: 'None',
+            chosenMed: 'None',
+            chosenDisease: 'None',
             date: '',
         };
     }
@@ -33,9 +40,51 @@ class FormDialog extends Component {
         this.setState({ open: false });
     };
 
-    handleSubmit = () => {
-        alert(this.state.patiendId);
+    handleMedChange = med => {
+        this.setState({ chosenMed: med });
     };
+
+    handleChangeDisease = disease => {
+        this.setState({ chosenDisease: disease });
+    };
+
+    handleSubmit = () => {
+        let newDate = new Date();
+        let now = newDate.getTime();
+        this.setState({ open: false, date: now });
+        this.state.date = now;
+        var disease_code = '',
+            med_sci_name;
+
+        for (const i in this.state.diseases) {
+            if (this.state.diseases[i].name == this.state.chosenDisease) {
+                disease_code = this.state.diseases[i].disease_code;
+                break;
+            }
+        }
+
+        for (const i in this.state.medicines) {
+            if (this.state.medicines[i].brand_name == this.state.chosenMed) {
+                med_sci_name = this.state.medicines[i].sci_name;
+                break;
+            }
+        }
+        let data = {
+            doctor_id: this.state.doctorId,
+            patient_id: this.state.patiendId,
+            medicines: [
+                { med_name: med_sci_name, amount: '10', each_n_hours: '10' },
+            ],
+            dis_code: disease_code,
+            vis_date: '2018-05-12T00:01:10',
+        };
+        console.log(JSON.stringify(data));
+
+        axios.post(urls.postVisit, data).then(res => {
+            console.log(res);
+        });
+    };
+
     render() {
         return (
             <div>
@@ -71,6 +120,10 @@ class FormDialog extends Component {
                         <ControlledOpenSelect
                             diseases={this.state.diseases}
                             medicines={this.state.medicines}
+                            handleMedChange={this.handleMedChange}
+                            handleChangeDisease={this.handleChangeDisease}
+                            chosenMed={this.state.chosenMed}
+                            chosenDisease={this.state.chosenDisease}
                         ></ControlledOpenSelect>
                     </DialogContent>
                     <DialogActions>

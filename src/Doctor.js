@@ -24,6 +24,7 @@ class Doctor extends Component {
             isLoading: true,
             diseases: null,
             medicines: null,
+            nameIsLoading: true,
         };
         console.log('props', this.props);
     }
@@ -53,13 +54,15 @@ class Doctor extends Component {
         Axios.get(
             urls.getSpecialDoctorInfo.replace('#id', this.state.employeeId),
         ).then(res => {
-            let info = res.data;
+            let info = res.data[0];
             console.log(info);
             this.setState({
-                firstName: info.f_name,
-                lastName: info.l_name,
-                speciality: info.speciality,
+                firstName: info.f_name == null ? '' : info.f_name,
+                lastName: info.l_name == null ? '' : info.l_name,
+                speciality: info.speciality == null ? '' : info.speciality,
             });
+
+            this.setState({ nameIsLoading: false });
         });
     }
 
@@ -75,22 +78,22 @@ class Doctor extends Component {
     render() {
         return (
             <div>
-                <AppBar>
-                    <Toolbar>
-                        {this.state.firstName != null &&
-                        this.state.lastName != null ? (
-                            <div>
-                                <h3>
-                                    Welcome back Dr. {this.state.firstName}
-                                    {this.state.lastName}
-                                </h3>
-                            </div>
-                        ) : (
-                            <view></view>
-                        )}
-                        {/* <h4>speciality: {this.state.speciality}</h4> */}
-                    </Toolbar>
-                </AppBar>
+                <div>
+                    {this.state.nameIsLoading == true ? (
+                        <AppBar>
+                            <Toolbar> Waiting for your data ...</Toolbar>
+                        </AppBar>
+                    ) : (
+                        <AppBar>
+                            <Toolbar>
+                                {' '}
+                                Hi Doctor {this.state.firstName}{' '}
+                                {this.state.lastName} / Speciality:{' '}
+                                {this.state.speciality}
+                            </Toolbar>
+                        </AppBar>
+                    )}
+                </div>
                 <div
                     style={{
                         paddingTop: 100,
@@ -100,9 +103,12 @@ class Doctor extends Component {
                     }}
                 >
                     {this.state.isLoading ? (
-                        <view>Please wait, Page is Loading ...</view>
+                        <view>Please wait, Your visits are Loading ...</view>
                     ) : (
-                        <VisitsDeck cards={this.state.visits}></VisitsDeck>
+                        <view>
+                            Your Visits:
+                            <VisitsDeck cards={this.state.visits}></VisitsDeck>
+                        </view>
                     )}
                 </div>
 
@@ -121,6 +127,7 @@ class Doctor extends Component {
                         <FormDialog
                             medicines={this.state.medicines}
                             diseases={this.state.diseases}
+                            doctorId={this.state.employeeId}
                         ></FormDialog>
                     ) : (
                         <view></view>

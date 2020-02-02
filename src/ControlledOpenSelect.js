@@ -9,71 +9,61 @@ import Button from '@material-ui/core/Button';
 class ControlledOpenSelect extends Component {
     constructor(props) {
         super(props);
-        this.handleChangeDisease.bind(this);
-        this.handleClose.bind(this);
-        this.handleOpen.bind(this);
 
         this.state = {
             open: false,
             diseases: this.props.diseases,
             medicines: this.props.medicines,
-            chosenDisease: '',
-            chosenMed: '',
+            chosenMed: 'None',
+            chosenDisease: 'None',
         };
     }
 
     diseaseItems = this.props.diseases.map(disease => (
-        <MenuItem value={disease.sci_name}>
-            <em>{disease.brand_name}</em>
-        </MenuItem>
+        <option id={disease.disease_code}>{disease.name}</option>
     ));
 
     medItems = this.props.medicines.map(med => (
-        <MenuItem value={med.sci_name}>
-            <em>{med.brand_name}</em>
-        </MenuItem>
+        <option id={med.sci_name}>{med.brand_name}</option>
     ));
 
-    handleChangeDisease = event => {
-        this.setState({ chosenDisease: event.target.value });
+    handleMedChange = med => {
+        this.setState({ chosenMed: med });
     };
 
-    handleClose = () => {
-        this.setState({ open: false });
-        console.log(this.state);
-    };
-
-    handleOpen = () => {
-        this.setState({ open: true });
+    handleChangeDisease = disease => {
+        this.setState({ chosenDisease: disease });
     };
 
     render() {
         return (
             <div>
-                <Button onClick={this.handleOpen}>Choose medicine</Button>
                 <FormControl>
-                    <InputLabel id="demo-controlled-open-select-label">
-                        medicines
-                    </InputLabel>
-                    <Select
-                        labelId="demo-controlled-open-select-label"
-                        id="demo-controlled-open-select"
-                        open={this.state.open}
-                        onClose={this.handleClose}
-                        onOpen={this.handleOpen}
-                        // value={this.state.chosenMed}
-                        onChange={e =>
-                            this.setState({ chosenMed: e.target.value })
-                        }
-                        onSelect={e =>
-                            this.setState({ chosenMed: e.target.value })
-                        }
+                    Choose medicise:
+                    <select
+                        name="chosenMed"
+                        value={this.state.chosenMed}
+                        onChange={event => {
+                            this.handleMedChange(event.target.value);
+                            this.props.handleMedChange(event.target.value);
+                        }}
                     >
-                        <MenuItem value="">
-                            <em>None</em>
-                        </MenuItem>
-                        <div>{this.medItems}</div>
-                    </Select>
+                        <option id="None">None</option>
+                        {this.medItems}
+                    </select>
+                    Choose disease:
+                    <select
+                        name="chosenDisease"
+                        value={this.state.chosenDisease}
+                        onChange={event => {
+                            this.handleChangeDisease(event.target.value);
+                            this.props.handleChangeDisease(event.target.value);
+                        }}
+                    >
+                        <option id="None">None</option>
+
+                        {this.diseaseItems}
+                    </select>
                 </FormControl>
             </div>
         );

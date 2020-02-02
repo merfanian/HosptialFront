@@ -8,10 +8,6 @@ class VisitsDeck extends Component {
     ));
 
     render() {
-        console.log(this.props);
-
-        console.log('visit deck' + this.listItems);
-
         return <div>{this.listItems}</div>;
     }
 }
