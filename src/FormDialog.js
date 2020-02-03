@@ -49,10 +49,15 @@ class FormDialog extends Component {
     };
 
     handleSubmit = () => {
-        let newDate = new Date();
-        let now = newDate.getTime();
-        this.setState({ open: false, date: now });
-        this.state.date = now;
+        let dateObj = new Date();
+        var month = dateObj.getUTCMonth() + 1; //months from 1-12
+        var day = dateObj.getUTCDate();
+        var year = dateObj.getUTCFullYear();
+        var newdate = year + '-0' + month + '-0' + day + 'T00:00:00';
+
+        console.log(newdate);
+        this.setState({ open: false, date: newdate });
+        this.state.date = newdate;
         var disease_code = '',
             med_sci_name;
 
@@ -69,19 +74,20 @@ class FormDialog extends Component {
                 break;
             }
         }
+
         let data = {
-            doctor_id: this.state.doctorId,
-            patient_id: this.state.patiendId,
+            doctor_id: parseInt(this.state.doctorId),
+            patient_id: parseInt(this.state.patiendId),
             medicines: [
-                { med_name: med_sci_name, amount: '10', each_n_hours: '10' },
+                { med_name: med_sci_name, amount: 10, each_n_hours: 10 },
             ],
-            dis_code: disease_code,
-            vis_date: '2018-05-12T00:01:10',
+            dis_code: parseInt(disease_code),
+            vis_date: newdate,
         };
         console.log(JSON.stringify(data));
 
         axios.post(urls.postVisit, data).then(res => {
-            console.log(res);
+            alert('New visit added.');
         });
     };
 

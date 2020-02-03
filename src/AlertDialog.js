@@ -7,8 +7,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 class AlertDialog extends Component {
-    // listItems = ;
-
     constructor(props) {
         super(props);
         console.log(this);
@@ -50,7 +48,10 @@ class AlertDialog extends Component {
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
                             {this.props.medicine.map(med => (
-                                <li>{med}</li>
+                                <li>
+                                    {med.med_name}, amount:{med.amount}, each{' '}
+                                    {med.each_n_hours} hours.
+                                </li>
                             ))}
                         </DialogContentText>
                     </DialogContent>

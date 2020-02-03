@@ -45,7 +45,9 @@ class MediaCard extends Component {
                         </CardContent>
                     </CardActionArea>
                     <CardActions>
-                        <AlertDialog medicine={['1', '2']}></AlertDialog>
+                        <AlertDialog
+                            medicine={this.props.medicines}
+                        ></AlertDialog>
                     </CardActions>
                 </Card>
             </div>
